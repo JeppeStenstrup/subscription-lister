@@ -15,36 +15,30 @@ namespace Subscription_Listing.Services
 
         public async Task<List<Subscription>> FetchSubscriptions()
         {
-            var subscriptions = new List<Subscription>();
-            
-            string cursor = null;
-            do
-            {
-                // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscriptions
-                var datatuple = await _restHelp.GetOpenApiCollectionAsync<Subscription>(RestApi.subscriptionsapi, "v2.0.0", "subscriptions", null, cursor);
-                cursor = datatuple.Item1;
-                subscriptions.AddRange(datatuple.Item2);
-            }
-            while (cursor != null);
-
-            return subscriptions;
+            // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscriptions
+            return await FetchAll<Subscription>(RestApi.subscriptionsapi, "subscriptions");
         }
 
         public async Task<List<Subscriber>> FetchSubscribers()
         {
-            var subscribers = new List<Subscriber>();
+            // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscribers
+            return await FetchAll<Subscriber>(RestApi.subscriptionsapi, "subscribers");
+        }
+
+        private async Task<List<T>> FetchAll<T>(RestApi api, string resource)
+        {
+            var data = new List<T>();
             
             string cursor = null;
             do
             {
-                // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscriptions
-                var datatuple = await _restHelp.GetOpenApiCollectionAsync<Subscriber>(RestApi.subscriptionsapi, "v2.0.0", "subscribers", null, cursor);
+                var datatuple = await _restHelp.GetOpenApiCollectionAsync<T>(api, "v2.0.0", resource, null, cursor);
                 cursor = datatuple.Item1;
-                subscribers.AddRange(datatuple.Item2);
+                data.AddRange(datatuple.Item2);
             }
             while (cursor != null);
 
-            return subscribers;
+            return data;
         }
     }
 }
