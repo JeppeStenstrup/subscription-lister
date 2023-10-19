@@ -16,7 +16,7 @@ namespace Subscription_Listing
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
         public int specialPrice { get; set; }
-        public int discountPercentage { get; set; }
+        public double discountPercentage { get; set; }
         public DateTime discountExpiryDate { get; set; }
         public int priceFactor { get; set; }
         public DateTime registrationDate { get; set; }
