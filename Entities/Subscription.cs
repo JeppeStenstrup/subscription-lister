@@ -25,5 +25,6 @@ namespace Subscription_Listing
         public bool isBarred { get; set; }
         public DateTime lastUpdated { get; set; }
         public string objectVersion { get; set; }
+        public List<SubscriptionLine> SubscriptionLines { get; set; }
     }
 }

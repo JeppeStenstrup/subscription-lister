@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Subscription_Listing.Services
@@ -16,7 +17,17 @@ namespace Subscription_Listing.Services
         public async Task<List<Subscription>> FetchSubscriptions()
         {
             // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscriptions
-            return await FetchAll<Subscription>(RestApi.subscriptionsapi, "subscriptions");
+            var subscriptions = await FetchAll<Subscription>(RestApi.subscriptionsapi, "subscriptions");
+            
+            // Tricky format returned from {api}/subscriptions/{id}/lines (i.e. {[ .. ]}, as opposed to [{items: .. }] from subscriptionlines)
+            var lines = await FetchAll<SubscriptionLine>(RestApi.subscriptionsapi, "subscriptionlines");
+
+            foreach (var subscription in subscriptions)
+            {
+                subscription.SubscriptionLines = lines.Where(l => l.subscriptionNumber == subscription.number).ToList();
+            }
+            
+            return subscriptions;
         }
 
         public async Task<List<Subscriber>> FetchSubscribers()
