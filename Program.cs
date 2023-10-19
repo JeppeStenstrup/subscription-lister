@@ -21,6 +21,11 @@ namespace Subscription_Listing
                 Console.WriteLine(subscription.name);
             }
             
+            foreach (var subscriber in subscribers)
+            {
+                Console.WriteLine(subscriber.customerNumber);
+            }
+            
             Console.WriteLine("finished");
             Console.ReadKey();
         }
