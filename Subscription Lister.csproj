@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Subscriber.cs" />
     <Compile Include="Entities\Subscription.cs" />
     <Compile Include="Helpers\RestHelp.cs" />
     <Compile Include="Program.cs" />
