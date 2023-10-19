@@ -8,6 +8,7 @@ namespace Subscription_Listing
 {
     /// <summary>
     /// DTO Subscription
+    /// Extracted from https://apis.e-conomic.com/#Subscriptions..tag/Subscriptions
     /// </summary>
     public class Subscription
     {
