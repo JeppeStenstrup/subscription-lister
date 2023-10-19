@@ -15,7 +15,7 @@ namespace Subscription_Listing.Services
 
         public async Task<List<Subscription>> FetchSubscriptions()
         {
-            var Subscriptions = new List<Subscription>();
+            var subscriptions = new List<Subscription>();
             
             string cursor = null;
             do
@@ -23,11 +23,11 @@ namespace Subscription_Listing.Services
                 // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscriptions
                 var datatuple = await _restHelp.GetOpenApiCollectionAsync<Subscription>(RestApi.subscriptionsapi, "v2.0.0", "subscriptions", null, cursor);
                 cursor = datatuple.Item1;
-                Subscriptions.AddRange(datatuple.Item2);
+                subscriptions.AddRange(datatuple.Item2);
             }
             while (cursor != null);
 
-            return Subscriptions;
+            return subscriptions;
         }
     }
 }
