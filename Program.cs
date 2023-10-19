@@ -14,6 +14,7 @@ namespace Subscription_Listing
             var api = new EconomicService();
 
             var subscriptions = await api.FetchSubscriptions();
+            var subscribers = await api.FetchSubscribers();
 
             foreach (var subscription in subscriptions)
             {
