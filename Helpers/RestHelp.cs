@@ -95,6 +95,15 @@ namespace Subscription_Listing
             return Tuple.Create(data.Item1.cursor, data.Item1.items);
         }
 
+        public async Task<T> GetOpenApiSingleItemAsync<T>(RestApi api, string version, string resource)
+        {
+            string url = OpenApiMakeUrl(api, version, resource);
+            var data = await GetFromUrlAsync<T>(url);
+            if (data.Item2 != HttpStatusCode.OK)
+                return default;
+            return data.Item1;
+        }
+
         /// <summary>
         /// </summary>
         /// <param name="url"></param>
