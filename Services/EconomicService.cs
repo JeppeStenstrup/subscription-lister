@@ -33,7 +33,15 @@ namespace Subscription_Listing.Services
         public async Task<List<Subscriber>> FetchSubscribers()
         {
             // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscribers
-            return await FetchAll<Subscriber>(RestApi.subscriptionsapi, "subscribers");
+            var subscribers = await FetchAll<Subscriber>(RestApi.subscriptionsapi, "subscribers");
+
+            foreach (var subscriber in subscribers)
+            {
+                subscriber.subscription =
+                    await _restHelp.GetOpenApiSingleItemAsync<Subscription>(RestApi.subscriptionsapi, "v2.0.0", $"subscriptions/{subscriber.subscriptionNumber}");
+            }
+
+            return subscribers;
         }
 
         private async Task<List<T>> FetchAll<T>(RestApi api, string resource)
