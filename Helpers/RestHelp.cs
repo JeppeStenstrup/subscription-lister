@@ -56,7 +56,6 @@ namespace Subscription_Listing
         public string OpenApiMakeUrl(RestApi api, string version, string resource, string filter = null, string collection_cursor = null)
         {
             string url = $"{_openapi_url}/{api}/{version}/{resource}";
-            Console.WriteLine(url);
             if (!string.IsNullOrWhiteSpace(filter))
             {
                 url += "?" + filter;
