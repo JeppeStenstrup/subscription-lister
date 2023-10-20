@@ -14,9 +14,12 @@ namespace Subscription_Listing.Services
             _restHelp = new RestHelp("demo", "demo"); // Should be extracted and parsed from elsewhere
         }
 
+        /// <summary>
+        /// Fetch request for retreiving all subscriptions, including subscriptionlines
+        /// </summary>
+        /// <returns>List of Subscriptions -o- null</returns>
         public async Task<List<Subscription>> FetchSubscriptions()
         {
-            // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscriptions
             var subscriptions = await FetchAll<Subscription>(RestApi.subscriptionsapi, "subscriptions");
             
             // Tricky format returned from {api}/subscriptions/{id}/lines (i.e. {[ .. ]}, as opposed to [{items: .. }] from subscriptionlines)
@@ -30,9 +33,12 @@ namespace Subscription_Listing.Services
             return subscriptions;
         }
 
+        /// <summary>
+        /// Fetch request for retreiving all subscribers, including subscription
+        /// </summary>
+        /// <returns>List of Subscribers -o- null</returns>
         public async Task<List<Subscriber>> FetchSubscribers()
         {
-            // https://apis.e-conomic.com/subscriptionsapi/v2.0.0/subscribers
             var subscribers = await FetchAll<Subscriber>(RestApi.subscriptionsapi, "subscribers");
 
             foreach (var subscriber in subscribers)
