@@ -9,6 +9,7 @@ namespace Subscription_Listing.Services
     public class EconomicService : IEconomicService
     {
         private readonly RestHelp _restHelp;
+        private readonly string apiVersion = "v2.0.0";
         
         public EconomicService()
         {
@@ -44,8 +45,8 @@ namespace Subscription_Listing.Services
 
             foreach (var subscriber in subscribers)
             {
-                subscriber.subscription =
-                    await _restHelp.GetOpenApiSingleItemAsync<Subscription>(RestApi.subscriptionsapi, "v2.0.0", $"subscriptions/{subscriber.subscriptionNumber}");
+                subscriber.subscription = await FetchSingle<Subscription>(RestApi.subscriptionsapi,
+                    $"subscriptions/{subscriber.subscriptionNumber}");
             }
 
             return subscribers;
@@ -58,13 +59,18 @@ namespace Subscription_Listing.Services
             string cursor = null;
             do
             {
-                var datatuple = await _restHelp.GetOpenApiCollectionAsync<T>(api, "v2.0.0", resource, null, cursor);
+                var datatuple = await _restHelp.GetOpenApiCollectionAsync<T>(api, apiVersion, resource, null, cursor);
                 cursor = datatuple.Item1;
                 data.AddRange(datatuple.Item2);
             }
             while (cursor != null);
 
             return data;
+        }
+
+        private async Task<T> FetchSingle<T>(RestApi api, string resource)
+        {
+            return await _restHelp.GetOpenApiSingleItemAsync<T>(api, apiVersion, resource);
         }
     }
 }
