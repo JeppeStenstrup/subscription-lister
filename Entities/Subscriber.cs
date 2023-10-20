@@ -29,5 +29,6 @@ namespace Subscription_Listing
         public string comments { get; set; }
         public DateTime lastUpdated { get; set; }
         public string objectVersion { get; set; }
+        public Subscription subscription { get; set; }
     }
 }
