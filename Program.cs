@@ -13,21 +13,40 @@ namespace Subscription_Listing
         {
             var api = new EconomicService();
 
-            var subscriptions = await api.FetchSubscriptions();
-            var subscribers = await api.FetchSubscribers();
+            Console.WriteLine("Select action:");
+            Console.WriteLine("[L]ist all subscriptions");
+            Console.WriteLine("[G]et all subscribers");
+            var input = Console.ReadLine() ?? "";
 
-            foreach (var subscription in subscriptions)
+            switch (input.ToLower())
             {
-                Console.WriteLine(subscription.name);
+                case "l":
+                    var subscriptions = await api.FetchSubscriptions();
+                    foreach (var subscription in subscriptions.OrderBy(s => s.name))
+                    {
+                        Console.WriteLine(subscription.name);
+                        if (!subscription.SubscriptionLines.Any()) continue;
+                        
+                        foreach (var subscriptionLine in subscription.SubscriptionLines)
+                        {
+                            Console.WriteLine($"-- {subscriptionLine.description}");
+                        }
+                    }
+                    break;
+                case "g":
+                    var subscribers = await api.FetchSubscribers();
+                    foreach (var subscriber in subscribers.OrderBy(s => s.startDate))
+                    {
+                        Console.WriteLine(subscriber.number + $" ({subscriber.startDate})");
+                        if (subscriber.subscription == null) continue;
+                        
+                        Console.WriteLine($"-- {subscriber.subscription.name}");
+                    }
+                    break;
+                default:
+                    //TODO: Implement infinite loop with exit clause
+                    return;
             }
-            
-            foreach (var subscriber in subscribers)
-            {
-                Console.WriteLine(subscriber.customerNumber);
-            }
-            
-            Console.WriteLine("finished");
-            Console.ReadKey();
         }
     }
 }
