@@ -12,6 +12,7 @@ namespace Subscription_Listing
     {
         static async Task Main(string[] args)
         {
+            // Interface instantiation to "simulate" a DI
             IEconomicService api = new EconomicService();
 
             Console.WriteLine("Select action:");
