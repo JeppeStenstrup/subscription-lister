@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Subscription_Listing.Interfaces;
 using Subscription_Listing.Services;
 
 namespace Subscription_Listing
@@ -11,7 +12,7 @@ namespace Subscription_Listing
     {
         static async Task Main(string[] args)
         {
-            var api = new EconomicService();
+            IEconomicService api = new EconomicService();
 
             Console.WriteLine("Select action:");
             Console.WriteLine("[L]ist all subscriptions");
