@@ -50,6 +50,7 @@
     <Compile Include="Entities\Subscription.cs" />
     <Compile Include="Entities\SubscriptionLine.cs" />
     <Compile Include="Helpers\RestHelp.cs" />
+    <Compile Include="Interfaces\IEconomicService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EconomicService.cs" />

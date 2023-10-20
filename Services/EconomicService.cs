@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Subscription_Listing.Interfaces;
 
 namespace Subscription_Listing.Services
 {
-    public class EconomicService
+    public class EconomicService : IEconomicService
     {
         private readonly RestHelp _restHelp;
         
